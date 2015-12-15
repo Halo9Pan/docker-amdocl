@@ -11,20 +11,24 @@ RUN apt-get update && apt-get install -y \
   linux-headers-generic
 # linux-headers-3.19.0-32-generic
 
-RUN cd /tmp && \
-  wget -q http://www2.ati.com/drivers/linux/amd-catalyst-15.9-linux-installer-15.201.1151-x86.x86_64.zip 
+RUN apt-get install -y \
+  libqtcore4 libxfixes3 libxrandr2 qtcore4-l10n
 
-# COPY amd-catalyst-15.9-linux-installer-15.201.1151-x86.x86_64.zip /tmp/
-
-RUN cd /tmp && \
-  unzip amd-catalyst-15.9-linux-installer-15.201.1151-x86.x86_64.zip && \
-  chmod +x AMD-Catalyst-*.run && \
-  ./AMD-Catalyst-15.9-Linux-installer-15.201.1151-x86.x86_64.run --buildpkg Ubuntu/trusty --NoXServer
+ENV FGLRX_VERSION=15.300-0ubuntu1_amd64_UB_14.01
 
 RUN cd /tmp && \
-# dpkg -i fglrx_15.201-0ubuntu1_amd64.deb && \
-# dpkg -i fglrx-dev_15.201-0ubuntu1_amd64.deb && \
-# dpkg -i fglrx-amdcccle_15.201-0ubuntu1_amd64.deb && \
-  dpkg -i fglrx-core_15.201-0ubuntu1_amd64.deb
+  wget -q http://www2.ati.com/drivers/linux/fglrx-core_${FGLRX_VERSION}.deb && \
+  wget -q http://www2.ati.com/drivers/linux/fglrx_${FGLRX_VERSION}.deb && \
+  wget -q http://www2.ati.com/drivers/linux/fglrx-dev_${FGLRX_VERSION}.deb
 
-RUN rm -rf fglrx_* fglrx-* AMD-Catalyst-*.run amd-catalyst-*.zip
+# RUN cd /tmp && \
+# wget -q http://www2.ati.com/drivers/linux/radeon-crimson-15.11-15.30.1025.zip && \
+# unzip radeon-crimson-15.11-15.30.1025.zip && cd fglrx-15.30.1025 && \
+# chmod +x amd-driver-installer-*.run && \
+# ./amd-driver-installer-15.30.1025-x86.x86_64.run --buildpkg Ubuntu/trusty --NoXServer
+
+RUN cd /tmp && \
+  dpkg -i fglrx-*.deb && \
+  dpkg -i fglrx_*.deb
+
+RUN rm -rf fglrx_* fglrx-*
