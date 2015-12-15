@@ -14,18 +14,12 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get install -y \
   libqtcore4 libxfixes3 libxrandr2 qtcore4-l10n
 
-ENV FGLRX_VERSION=15.300-0ubuntu1_amd64_UB_14.01
-
 RUN cd /tmp && \
-  wget -q http://www2.ati.com/drivers/linux/fglrx-core_${FGLRX_VERSION}.deb && \
-  wget -q http://www2.ati.com/drivers/linux/fglrx_${FGLRX_VERSION}.deb && \
-  wget -q http://www2.ati.com/drivers/linux/fglrx-dev_${FGLRX_VERSION}.deb
-
-# RUN cd /tmp && \
-# wget -q http://www2.ati.com/drivers/linux/radeon-crimson-15.11-15.30.1025.zip && \
-# unzip radeon-crimson-15.11-15.30.1025.zip && cd fglrx-15.30.1025 && \
-# chmod +x amd-driver-installer-*.run && \
+  wget -q http://www2.ati.com/drivers/linux/radeon-crimson-15.11-15.30.1025.zip && \
+  unzip radeon-crimson-15.11-15.30.1025.zip && cd fglrx-15.30.1025 && \
+  chmod +x amd-driver-installer-*.run && \
 # ./amd-driver-installer-15.30.1025-x86.x86_64.run --buildpkg Ubuntu/trusty --NoXServer
+  ./amd-driver-installer-15.30.1025-x86.x86_64.run --buildpkg Ubuntu/trusty
 
 RUN cd /tmp && \
   dpkg -i fglrx-*.deb && \
