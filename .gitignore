@@ -1,6 +1,6 @@
 *.deb
 *.zip
-# *.run
-# *.sh
+*.run
+*.sh
 # *.tar.*
 
